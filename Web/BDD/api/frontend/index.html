@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="#">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API</title>
+</head>
+<body>
+    <button onclick="obtener('dolar')">Dolar</button>
+    <button onclick="obtener('euro')">Euro</button>
+    <button onclick="obtener('bss')">bss</button>
+    <ul id = "resultado">
+        Presiona un boton
+    </ul>
+    
+    
+    <script>
+
+        function obtener(moneda){
+        // Para accedder al backend
+        // Esta funcion para obtener los datos de la api de la base de datos, esos datos se convierten a json 
+        // para ser procesados por la pagina
+        fetch('http://localhost/api/backend/'+moneda).then(datos=>datos.json()).then(datos=>{
+            var resultado = document.getElementById('resultado');//Para tomar el id resultado 
+            resultado.innerHTML = '';//Para vaciar el contenido del html antes de la escritura de los datos
+            // Ciclo for para leer los datos del array json uno por uno con sus respectivos datos
+            for(let dato of datos){
+                resultado.innerHTML += `
+                <li>Fecha: ${dato.fecha}</li>
+                <li>Valor: ${dato.valor}</li>
+                `
+                ;
+
+            }
+        })}
+    </script>
+</body>
+</html>
